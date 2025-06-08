@@ -60,7 +60,7 @@ document.getElementById("command-input").addEventListener("keydown", function(e)
           <li>UNKNOWN_FILE(Δ).dat</li>
         </ul>`;
     } else if (cmd === "delta-node") {
-      window.open("https://example.com", "_blank");
+      window.open("https://google.com", "_blank");
     } else {
       alert("Command not recognized.");
     }
