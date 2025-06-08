@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Tōwer-16 Terminal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <audio id="tada" src="audio/tada.mp3"></audio>
+  <audio id="ps1" src="audio/ps1.mp3"></audio>
+  <audio id="vhs" src="audio/vhs-loop.mp3" loop></audio>
+
+  <div id="login-screen">
+    <div class="terminal-box">
+      <p>USER: <input id="username" type="text" /></p>
+      <p>PASSWORD: <input id="password" type="password" /></p>
+      <button onclick="attemptLogin()">LOGIN</button>
+    </div>
+  </div>
+
+  <div id="boot-screen" style="display:none;">
+    <pre id="boot-text"></pre>
+  </div>
+
+  <div id="main-interface" style="display:none;">
+    <p>Welcome to <strong>Tōwer-16</strong> Terminal</p>
+    <input id="command-input" type="text" placeholder="Enter command..." />
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
