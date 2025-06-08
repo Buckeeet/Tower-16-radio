@@ -1,32 +1,165 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Tōwer-16 Terminal</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ARG Terminal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background: black;
+      color: white;
+      font-family: monospace;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .screen {
+      position: absolute;
+      width: 90vw;
+      max-width: 1600px;
+      aspect-ratio: 16 / 9;
+      box-sizing: border-box;
+      padding: 20px;
+      display: none;
+      overflow: hidden;
+    }
+    #login-screen {
+      display: flex;
+      background: url('https://i.imgur.com/wjM3Y5x.png') no-repeat center center;
+      background-size: cover;
+      align-items: center;
+      justify-content: center;
+    }
+    #login-screen-content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+    }
+    #login-logo {
+      max-height: 300px;
+    }
+    #login-form {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 20px;
+      border: 2px solid white;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    #login-form input {
+      background: #111;
+      color: white;
+      border: 1px solid #444;
+      padding: 8px;
+      font-size: 1rem;
+    }
+    #login-form button {
+      padding: 10px;
+      background-color: #444;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    #boot-screen {
+      background: black;
+      color: red;
+      font-family: monospace;
+      font-size: 1.1rem;
+      white-space: pre-line;
+      overflow-y: auto;
+    }
+    #main-interface {
+      background: url('https://i.imgur.com/egLQOZn.png') no-repeat center center;
+      background-size: cover;
+      color: #00ff99;
+      font-family: 'Share Tech Mono', monospace;
+      position: relative;
+      animation: flicker 2s infinite;
+    }
+    #main-interface::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      height: 100%; width: 100%;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.1),
+        rgba(0, 0, 0, 0.1) 1px,
+        transparent 1px,
+        transparent 4px
+      );
+      z-index: 2;
+      pointer-events: none;
+    }
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.95; transform: scaleY(1.001); }
+    }
+    #main-interface-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      position: relative;
+      z-index: 1;
+    }
+    #main-logo {
+      max-width: 300px;
+    }
+  </style>
 </head>
 <body>
-  <audio id="tada" src="audio/tada.mp3"></audio>
-  <audio id="ps1" src="audio/ps1.mp3"></audio>
-  <audio id="vhs" src="audio/vhs-loop.mp3" loop></audio>
-
-  <div id="login-screen">
-    <div class="terminal-box">
-      <p>USER: <input id="username" type="text" /></p>
-      <p>PASSWORD: <input id="password" type="password" /></p>
-      <button onclick="attemptLogin()">LOGIN</button>
+  <div id="login-screen" class="screen" style="display: flex">
+    <div id="login-screen-content">
+      <img src="https://i.imgur.com/J2MsIuk.png" id="login-logo" />
+      <div id="login-form">
+        <input type="text" placeholder="Username" id="username" />
+        <input type="password" placeholder="Password" id="password" />
+        <button onclick="handleLogin()">Login</button>
+      </div>
     </div>
-  </div>
+  </div>  <div id="boot-screen" class="screen">
+    <div id="boot-text"></div>
+  </div>  <div id="main-interface" class="screen">
+    <div id="main-interface-content">
+      <img src="https://i.imgur.com/VrTT6Ln.png" id="main-logo" />
+      <div id="command-box">
+        <!-- Terminal UI or keyword input can go here -->
+      </div>
+    </div>
+  </div><audio id="tada" src="tada.mp3"></audio> <audio id="startup" src="ps1.mp3"></audio> <audio id="vhs" src="vhs-loop.mp3" loop></audio>
 
-  <div id="boot-screen" style="display:none;">
-    <pre id="boot-text"></pre>
-  </div>
+  <script>
+    function handleLogin() {
+      const user = document.getElementById('username').value;
+      const pass = document.getElementById('password').value;
+      if (user === 'Junction' && pass === 'XII12') {
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('boot-screen').style.display = 'block';
+        document.getElementById('tada').play();
 
-  <div id="main-interface" style="display:none;">
-    <p>Welcome to <strong>Tōwer-16</strong> Terminal</p>
-    <input id="command-input" type="text" placeholder="Enter command..." />
-  </div>
+        setTimeout(() => {
+          document.getElementById('boot-text').textContent = 'BOOTING SYSTEM...\nLOADING MODULES...\nESTABLISHING INTERFACE...';
+        }, 2000);
 
-  <script src="script.js"></script>
-</body>
+        setTimeout(() => {
+          document.getElementById('boot-screen').style.display = 'none';
+          document.getElementById('main-interface').style.display = 'block';
+          document.getElementById('startup').play();
+          setTimeout(() => document.getElementById('vhs').play(), 4000);
+        }, 6000);
+      } else {
+        alert('Access Denied');
+      }
+    }
+  </script></body>
 </html>
