@@ -1,0 +1,26 @@
+body {
+  background: black;
+  color: lime;
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
+  padding: 20px;
+  text-shadow: 0 0 5px #0f0;
+}
+
+.terminal-box {
+  border: 2px solid #0f0;
+  padding: 20px;
+  max-width: 400px;
+  margin: 100px auto;
+  background: rgba(0, 0, 0, 0.9);
+  box-shadow: 0 0 20px #0f0;
+}
+
+input {
+  background: black;
+  color: lime;
+  border: none;
+  border-bottom: 1px solid #0f0;
+  font-family: 'Courier New', monospace;
+  width: 90%;
+}
