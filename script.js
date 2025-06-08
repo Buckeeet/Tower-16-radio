@@ -15,12 +15,10 @@ function bootUp() {
   const ps1 = document.getElementById("ps1");
   const vhs = document.getElementById("vhs");
 
+  // Play Tada after login
   tada.play();
 
-  setTimeout(() => {
-    ps1.play();
-  }, 1500); // after tada
-
+  // Wait for tada to finish (~2 sec), then start boot sequence
   setTimeout(() => {
     document.getElementById("boot-screen").style.display = "block";
     const bootText = document.getElementById("boot-text");
@@ -40,12 +38,17 @@ function bootUp() {
         i++;
       } else {
         clearInterval(interval);
+
+        // Boot complete
         document.getElementById("boot-screen").style.display = "none";
         document.getElementById("main-interface").style.display = "block";
+
+        // THEN play ps1 + loop vhs
+        ps1.play();
         vhs.play();
       }
     }, 1000);
-  }, 3000); // Wait for sound effects to finish
+  }, 2000); // Wait until tada is done before starting boot
 }
 
 document.getElementById("command-input").addEventListener("keydown", function(e) {
