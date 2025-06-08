@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ARG Terminal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Login Screen -->
+  <div id="login-screen" class="screen" style="display: flex">
+    <div id="login-screen-content">
+      <img src="https://i.imgur.com/J2MsIuk.png" id="login-logo" />
+      <div id="login-form">
+        <input type="text" placeholder="Username" id="username" />
+        <input type="password" placeholder="Password" id="password" />
+        <button onclick="handleLogin()">Login</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Booting Screen -->
+  <div id="boot-screen" class="screen">
+    <div id="boot-text"></div>
+  </div>
+
+  <!-- Main Interface -->
+  <div id="main-interface" class="screen">
+    <div id="main-interface-content">
+      <img src="https://i.imgur.com/VrTT6Ln.png" id="main-logo" />
+      <div id="command-box">
+        <input type="text" id="command-input" placeholder="Enter keyword...">
+      </div>
+    </div>
+  </div>
+
+  <!-- Sounds -->
+  <audio id="tada" src="audio/tada.mp3"></audio>
+  <audio id="startup" src="audio/ps1.mp3"></audio>
+  <audio id="vhs" src="audio/vhs-loop.mp3" loop></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
