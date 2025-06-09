@@ -44,14 +44,22 @@ function runBootSequence() {
 }
 
 function loadMainUI() {
-  mainUI.classList.remove("hidden");
-  const ps1 = document.getElementById("ps1");
-  const vhs = document.getElementById("vhs");
-  ps1.play();
+  const flicker = document.getElementById("flicker-overlay");
+  flicker.classList.remove("hidden");
+  flicker.classList.add("flicker-on");
 
-  ps1.addEventListener("ended", () => {
-    vhs.play();
-  });
+  setTimeout(() => {
+    flicker.classList.add("hidden");
+    mainUI.classList.remove("hidden");
+
+    const ps1 = document.getElementById("ps1");
+    const vhs = document.getElementById("vhs");
+
+    ps1.play();
+    ps1.addEventListener("ended", () => {
+      vhs.play();
+    });
+  }, 1500); // matches flicker duration
 }
 
 function processKeyword() {
