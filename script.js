@@ -1,48 +1,67 @@
-function handleLogin() {
-  const user = document.getElementById('username').value;
-  const pass = document.getElementById('password').value;
-  const tada = document.getElementById('tada');
-  const startup = document.getElementById('startup');
-  const vhs = document.getElementById('vhs');
+const loginScreen = document.getElementById("login-screen");
+const bootScreen = document.getElementById("boot-screen");
+const mainUI = document.getElementById("main-ui");
+const bootLines = document.getElementById("boot-lines");
 
-  if (user === 'Junction' && pass === 'XII12') {
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('boot-screen').style.display = 'block';
-    tada.play();
+function validateLogin() {
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
 
-    setTimeout(() => {
-      document.getElementById('boot-text').textContent = 'BOOTING SYSTEM...\nLOADING MODULES...\nESTABLISHING INTERFACE...';
-    }, 2000);
+  if (username === "Junction" && password === "XII12") {
+    document.getElementById("tada").play();
+    loginScreen.classList.add("hidden");
 
     setTimeout(() => {
-      document.getElementById('boot-screen').style.display = 'none';
-      document.getElementById('main-interface').style.display = 'block';
-      startup.play();
-
-      setTimeout(() => {
-        vhs.play();
-      }, 4000);
-    }, 6000);
+      bootScreen.classList.remove("hidden");
+      runBootSequence();
+    }, 1000);
   } else {
-    alert('Access Denied');
+    alert("Incorrect login.");
   }
 }
 
-// Handle keyword input on main interface
-document.addEventListener('DOMContentLoaded', () => {
-  const input = document.getElementById('command-input');
-  input.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      const value = input.value.trim().toLowerCase();
-      if (value === 'access-arkive') {
-        alert('Accessing internal archive...');
-        // Load internal file archive view
-        // You can replace this with an actual page switch or UI update
-      } else if (value === 'delta-node') {
-        window.open('https://example.com', '_blank');
-      } else {
-        alert('Unknown command.');
-      }
+function runBootSequence() {
+  const lines = [
+    "> Initializing boot core...",
+    "> Starting up the fuse box...",
+    "> Connecting to mainframe...",
+    "> Finalizing launch...",
+  ];
+
+  let i = 0;
+  const interval = setInterval(() => {
+    if (i < lines.length) {
+      bootLines.innerHTML += lines[i] + "<br/>";
+      i++;
+    } else {
+      clearInterval(interval);
+      setTimeout(() => {
+        bootScreen.classList.add("hidden");
+        loadMainUI();
+      }, 1000);
     }
+  }, 1000);
+}
+
+function loadMainUI() {
+  mainUI.classList.remove("hidden");
+  const ps1 = document.getElementById("ps1");
+  const vhs = document.getElementById("vhs");
+  ps1.play();
+
+  ps1.addEventListener("ended", () => {
+    vhs.play();
   });
-});
+}
+
+function processKeyword() {
+  const keyword = document.getElementById("keyword").value.trim().toUpperCase();
+
+  if (keyword === "LINK01") {
+    window.location.href = "https://www.youtube.com";
+  } else if (keyword === "ARCHIVE01") {
+    document.getElementById("archive").classList.remove("hidden");
+  } else {
+    alert("Invalid code.");
+  }
+}
