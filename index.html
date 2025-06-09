@@ -1,56 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ARG Access</title>
+  <title>Junction ARG</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- LOGIN SCREEN -->
-  <div id="login-screen" class="full-screen" style="background-image: url('img/lb.png');">
-    <div class="login-container">
-      <img src="img/ll.png" class="login-logo" />
+  <div class="aspect-16-9">
+    <!-- LOGIN SCREEN -->
+    <div id="login-screen">
+      <img src="img/ll.png" alt="Logo" class="logo" />
       <div class="login-box">
-        <input id="username" placeholder="Username" />
-        <input id="password" type="password" placeholder="Password" />
-        <button onclick="validateLogin()">Access</button>
+        <input type="text" id="username" placeholder="Username" />
+        <input type="password" id="password" placeholder="Password" />
+        <button id="login-btn">Login</button>
       </div>
     </div>
+<!-- BOOT SCREEN -->
+<div id="boot-screen" class="hidden">
+  <img src="img/bl.png" alt="Boot Logo" class="boot-logo" />
+  <div class="boot-content" id="boot-content">
+ </div>
+</div>
+
+<!-- MAIN UI -->
+<div id="main-ui" class="hidden">
+  <img src="img/tl.png" alt="Main Logo" class="main-logo" />
+  <div class="keyword-box">
+    <input type="text" id="keyword" placeholder="Enter Keyword" />
+    <button id="submit-keyword">Submit</button>
   </div>
+  <div id="archive" class="hidden">all you had to do, is to make a damn site, CJ</div>
+</div>
 
-  <!-- BOOT SEQUENCE -->
-  <div id="boot-screen" class="hidden full-screen boot-bg">
-    <div class="boot-content" id="boot-lines"></div>
-  </div>
+  </div>  <!-- AUDIO -->
+<audio id="tada" src="audio/tada.mp3"></audio> 
+<audio id="ps1" src="audio/ps1.mp3"></audio> 
+<audio id="vhs" src="audio/vhs-loop.mp3" loop></audio>
 
-  <!-- MAIN UI -->
-  <div id="main-ui" class="hidden full-screen" style="background-image: url('img/tb.png');">
-    <audio id="ps1" src="audio/ps1.mp3"></audio>
-    <audio id="vhs" src="audio/vhs-loop.mp3" loop></audio>
-
-    <img src="img/tl.png" class="main-logo" />
-    <div class="keyword-box">
-      <input id="keyword" placeholder="Enter Code" />
-      <button onclick="processKeyword()">Submit</button>
-    </div>
-
-    <div id="archive" class="hidden archive">
-      <p>“All you had to do, is to make a damn site, CJ.”</p>
-    </div>
-  </div>
-
-  <audio id="tada" src="audio/tada.mp3"></audio>
-  <script src="script.js"></script>
-  <body>
-  <div class="aspect-16-9" id="aspect-wrapper">
-    <!-- All your site content here -->
-    <!-- login-screen, boot-screen, main-ui, etc. -->
-  </div>
-
-  <!-- Audios + Scripts remain outside -->
-  <audio id="tada" src="audio/tada.mp3"></audio>
-  <script src="script.js"></script>
-  </body>
-</body>
+  <script src="script.js"></script></body>
 </html>
