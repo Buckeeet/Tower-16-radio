@@ -1,47 +1,48 @@
-<!DOCTYPE html><html lang="en">
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Junction ARG</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ARG Terminal</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <div class="aspect-16-9">
-    <!-- LOGIN SCREEN -->
-    <div id="login-screen">
-      <img src="img/ll.png" alt="Logo" class="logo" />
-      <div class="login-box">
-        <input type="text" id="username" placeholder="Username" />
-        <input type="password" id="password" placeholder="Password" />
-        <button id="login-btn">Login</button>
-      </div>
-    </div>
-<!-- BOOT SCREEN -->
-<div id="boot-screen" class="hidden">
-  <img src="img/bl.png" alt="Boot Logo" class="boot-logo" />
-  <div class="boot-content" id="boot-content">
- </div>
-</div>
-
-<!-- MAIN UI -->
-<div id="main-ui" class="hidden">
-  <img src="img/tl.png" alt="Main Logo" class="main-logo" />
-  <div class="keyword-box">
-    <input type="text" id="keyword" placeholder="Enter Keyword" />
-    <button id="submit-keyword">Submit</button>
+  <!-- Boot Phase -->
+  <div id="bootup-screen" class="screen">
+    <img src="img/bl.png" alt="Boot Logo" class="logo spin" id="boot-logo"/>
+    <div id="boot-text" class="terminal-text"></div>
   </div>
-  <div id="archive" class="hidden">all you had to do, is to make a damn site, CJ</div>
-</div>
 
-  </div>  <!-- AUDIO -->
-<audio id="tada" src="audio/tada.mp3"></audio> 
-<audio id="ps1" src="audio/ps1.mp3"></audio> 
-<audio id="vhs" src="audio/vhs-loop.mp3" loop></audio>
+  <!-- Login Phase -->
+  <div id="login-screen" class="screen hidden" style="background-image: url('img/lb.png');">
+    <img src="img/ll.png" alt="Login Logo" class="logo"/>
+    <form id="login-form">
+      <input type="text" id="username" placeholder="USER ID" autocomplete="off"/>
+      <input type="password" id="password" placeholder="PASSWORD"/>
+      <button type="submit">ENTER</button>
+    </form>
+  </div>
 
-  <script src="script.js"></script></body>
-  <!-- New: Transition Screen -->
-<div id="transition-screen" class="screen hidden" style="background: black;">
-  <img src="img/bl.png" alt="Transition Logo" class="logo"/>
-  <p class="red-text">> AUTHORIZED</p>
-</div>
+  <!-- Transition Phase -->
+  <div id="transition-screen" class="screen hidden" style="background: black;">
+    <img src="img/bl.png" alt="Transition Logo" class="logo"/>
+    <p class="red-text">> AUTHORIZED</p>
+  </div>
+
+  <!-- Main UI -->
+  <div id="main-ui" class="screen hidden" style="background-image: url('img/tb.png');">
+    <img src="img/tl.png" alt="Main Logo" class="logo"/>
+    <p class="terminal-text">> WELCOME, OPERATIVE</p>
+    <input type="text" id="command-input" placeholder="Enter command..."/>
+    <div id="output"></div>
+  </div>
+
+  <!-- Audio -->
+  <audio id="vhs-loop" src="audio/vhs-loop.mp3" loop autoplay></audio>
+  <audio id="bootup-sound" src="audio/ps1.mp3"></audio>
+  <audio id="login-success" src="audio/tada.mp3"></audio>
+
+  <script src="script.js"></script>
+</body>
 </html>
