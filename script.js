@@ -1,77 +1,81 @@
-const loginBtn = document.getElementById("login-btn");
+// script.js
+
+const bootupScreen = document.getElementById("bootup-screen");
+const loginScreen = document.getElementById("login-screen");
+const transitionScreen = document.getElementById("transition-screen");
+const mainUI = document.getElementById("main-ui");
+
+const loginForm = document.getElementById("login-form");
 const usernameInput = document.getElementById("username");
 const passwordInput = document.getElementById("password");
-const loginScreen = document.getElementById("login-screen");
-const bootScreen = document.getElementById("boot-screen");
-const bootContent = document.getElementById("boot-content");
-const mainUI = document.getElementById("main-ui");
-const keywordInput = document.getElementById("keyword");
-const submitKeyword = document.getElementById("submit-keyword");
-const archive = document.getElementById("archive");
 
-const tada = document.getElementById("tada");
-const ps1 = document.getElementById("ps1");
-const vhs = document.getElementById("vhs");
+const commandInput = document.getElementById("command-input");
+const output = document.getElementById("output");
 
-const correctUsername = "Junction";
-const correctPassword = "XII12";
+const bootupSound = document.getElementById("bootup-sound");
+const loginSuccess = document.getElementById("login-success");
 
-loginBtn.addEventListener("click", () => {
-  const username = usernameInput.value;
-  const password = passwordInput.value;
+const bootLines = [
+  "> SYSTEM CHECK: OK",
+  "> LOADING MODULES...",
+  "> AUTH HANDSHAKE ESTABLISHED",
+  "> INITIALIZING PROTOCOLS",
+  "> ENCRYPTION STABLE",
+  "> CONNECTION SECURE",
+  "> BOOT COMPLETE"
+];
 
-  if (username === correctUsername && password === correctPassword) {
-    tada.play();
-    loginScreen.classList.add("hidden");
-    bootScreen.classList.remove("hidden");
-    startBootSequence();
-  } else {
-    alert("Incorrect login. Try again.");
-  }
-});
-
-function startBootSequence() {
-  const bootLines = [
-    "Starting up...",
-    "Checking system integrity...",
-    "Initializing core modules...",
-    "Booting memory stacks...",
-    "Engaging subroutines...",
-    "Loading fuse box...",
-    "Stabilizing input/output flow...",
-    "Accessing vault memory...",
-    "Finalizing environment...",
-    "System ready."
-  ];
-
-  let index = 0;
-  const interval = setInterval(() => {
-    if (index < bootLines.length) {
-      bootContent.textContent += bootLines[index] + "\n";
-      index++;
-    } else {
-      clearInterval(interval);
-      setTimeout(loadMainUI, 500);
-    }
-  }, 400);
-}
-
-function loadMainUI() {
-  bootScreen.classList.add("hidden");
-  mainUI.classList.remove("hidden");
-  ps1.play();
-  ps1.addEventListener("ended", () => {
-    vhs.play();
+function typeLine(line, element, delay) {
+  return new Promise(resolve => {
+    let i = 0;
+    const interval = setInterval(() => {
+      element.innerHTML += line[i];
+      i++;
+      if (i >= line.length) {
+        clearInterval(interval);
+        element.innerHTML += "<br/>";
+        setTimeout(resolve, delay);
+      }
+    }, 50);
   });
 }
 
-submitKeyword.addEventListener("click", () => {
-  const code = keywordInput.value.trim();
-  if (code === "LINK01") {
-    window.location.href = "https://www.youtube.com";
-  } else if (code === "ARCHIVE01") {
-    archive.classList.remove("hidden");
+async function runBootSequence() {
+  const bootText = document.getElementById("boot-text");
+  for (const line of bootLines) {
+    await typeLine(line, bootText, 2000);
+  }
+  bootupScreen.classList.add("hidden");
+  loginScreen.classList.remove("hidden");
+}
+
+runBootSequence();
+
+loginForm.addEventListener("submit", e => {
+  e.preventDefault();
+  const user = usernameInput.value.trim().toLowerCase();
+  const pass = passwordInput.value.trim().toLowerCase();
+
+  if (user === "admin" && pass === "delta") {
+    loginSuccess.play();
+    loginScreen.classList.add("hidden");
+    transitionScreen.classList.remove("hidden");
+
+    setTimeout(() => {
+      transitionScreen.classList.add("hidden");
+      mainUI.classList.remove("hidden");
+      bootupSound.play();
+    }, 8000);
   } else {
-    alert("Invalid code.");
+    alert("ACCESS DENIED");
+  }
+});
+
+commandInput.addEventListener("keydown", e => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    const command = commandInput.value.trim();
+    output.innerHTML += `> ${command}<br/>`;
+    commandInput.value = "";
   }
 });
